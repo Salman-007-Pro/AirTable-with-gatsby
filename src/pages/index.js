@@ -17,6 +17,7 @@ const HomePage = ({
 }) => {
   return (
     <Layout>
+      <SEO title="Home" />
       <Hero projects={projects} />
       <About />
       <GridProjects projects={projects} title="latest projects" />

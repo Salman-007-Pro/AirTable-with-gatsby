@@ -12,8 +12,37 @@ import {
   connectHits,
 } from "react-instantsearch-dom"
 
+const searchClient = algoliasearch(
+  process.env.GATSBY_ALGOLIA_APP_ID,
+  process.env.GATSBY_ALGOLIA_SEARCH_KEY
+)
+const NewHits = connectHits(({ hits }) => {
+  return hits.map(item => {
+    const { objectID, image, name } = item
+    return (
+      <article key={objectID}>
+        <Image fluid={image} className="img" />
+        <h4>{name}</h4>
+      </article>
+    )
+  })
+})
+
 const Search = () => {
-  return <h2>algolia search</h2>
+  return (
+    <Wrapper>
+      <Title title="Algolia Search" />
+      <InstantSearch
+        indexName={process.env.GATSBY_ALGOLIA_INDEX_NAME}
+        searchClient={searchClient}
+      >
+        <SearchBox />
+        <Container className="section-center">
+          <NewHits />
+        </Container>
+      </InstantSearch>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
